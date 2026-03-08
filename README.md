@@ -1,4 +1,4 @@
- Space Mining Simulator
+# Space Mining Simulator
 
 This is an Object-Oriented C++ console application that simulates the profitability of space mining missions. The program processes data about rocket fleets, celestial bodies, and resource market fluctuations to determine the efficiency and financial success of each mission.
 
