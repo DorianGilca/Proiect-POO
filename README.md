@@ -1,22 +1,23 @@
-# Space Mining Simulator
+# Space Mining Simulator (C++)
+A console-based simulator I built in C++ to model the logistics and economics of space mining. The goal of the project was to calculate whether sending a specific rocket to an asteroid is actually profitable after factoring in fuel costs, cargo limits, and dynamic market prices.
 
-This is an Object-Oriented C++ console application that simulates the profitability of space mining missions. The program processes data about rocket fleets, celestial bodies, and resource market fluctuations to determine the efficiency and financial success of each mission.
+## Technologies & Concepts
+Language: C++
 
-## Technologies Used
-* Language: C++
-* Core Libraries: Standard Template Library (STL)
+Core Tools: STL (std::vector, std::map, std::sort)
 
-## Technical Concepts Applied
-* Object-Oriented Programming (OOP): The data and business logic are encapsulated in specific, separated classes (Rockets, Asteroids, Market, Mission).
-* File I/O & CSV Parsing: The application reads input data from multiple `.csv` files, processes the information, and exports the final results to a structured CSV report.
-* Data Structures: Extensive use of `std::vector` for object storage and `std::map` for tracking resource quantities and cumulative profits.
-* Algorithms & Lambda Expressions: Used `std::sort` alongside a custom lambda function to dynamically calculate and rank the efficiency score of each rocket.
+OOP Architecture: I separated the entities into distinct classes (Rockets, Asteroids, Market, Mission) to keep the simulation logic clean.
 
-## Simulation Business Logic
-The system calculates mission profitability based on the following rules:
-1. Extracted quantity: Limited by the rocket's cargo capacity, the specific extraction yield, and the remaining stock on the targeted asteroid.
-2. Fuel consumption: Calculated for a round-trip, factoring in the asteroid's distance and the specific fuel efficiency and cost of each rocket.
-3. Market fluctuation (Supply & Demand): The selling price of a mined resource drops dynamically as the market becomes saturated, without falling below a predefined base price.
+Custom Sorting: Used lambda expressions with std::sort to rank rockets based on their calculated efficiency score.
 
-## How to run
- Compile the `.cpp` source files using a standard C++ compiler (e.g., GCC/MinGW). Also, run the resulting executable from the command line, providing the three initial database files as arguments: `./simulator rachete.csv asteroizi.csv piata.csv`
+## How the Simulation Works
+The profitability of a mission isn't static. The simulator applies the following rules:
+
+Cargo vs. Yield: A rocket can only extract what it can carry, limited by its extraction yield and the actual remaining stock on the targeted asteroid.
+
+Fuel Costs: Calculating the round-trip fuel consumption based on the asteroid's distance and the specific fuel efficiency of the rocket used.
+
+Dynamic Market (Supply & Demand): As a resource is mined and brought back, the market becomes saturated. The selling price drops dynamically, stopping only at a hardcoded base price.
+
+## Biggest Challenges
+Parsing multiple .csv files in pure C++ (without external libraries) was trickier than expected. I had to build a custom file I/O parser to extract and validate the data for the rockets, asteroids, and market prices before feeding it into the simulation loop.
