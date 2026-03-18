@@ -20,6 +20,7 @@ struct Resursa {
 class Piata {
 private:
     std::map<std::string, Resursa> resurse;
+
 public:
     void citesteDate(const std::string& fisier);
     Resursa& getResursaRef(const std::string& nume);
