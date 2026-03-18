@@ -9,15 +9,18 @@
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        std::cerr << "Utilizare: " << argv[0] << " <rachete.csv> <asteroizi.csv> <piata.csv>\n";
+        std::cerr << "Eroare: numar invalid de argumente.\n";
+        std::cerr << "Folosire: " << argv[0] << " <rachete.csv> <asteroizi.csv> <piata.csv>\n";
         return 1;
     }
 
     try {
         Rachete rachete;
         rachete.citesteDate(argv[1]);
+        
         Asteroizi asteroizi;
         asteroizi.citesteDate(argv[2]);
+        
         Piata piata;
         piata.citesteDate(argv[3]);
 
@@ -26,14 +29,17 @@ int main(int argc, char* argv[]) {
 
         for (auto& racheta : rachete.getRacheteRef()) {
             for (auto& asteroid : asteroizi.getAsteroiziRef()) {
-                if (asteroid.cantitate_totala <= 0) continue;
+                if (asteroid.cantitate_totala <= 0) {
+                    continue;
+                }
 
                 double extras = racheta.capacitate_transport * asteroid.randament;
-                if (extras > asteroid.cantitate_totala) extras = asteroid.cantitate_totala;
+                if (extras > asteroid.cantitate_totala) {
+                    extras = asteroid.cantitate_totala;
+                }
 
                 asteroid.cantitate_totala -= extras;
 
-                // drum dus intors
                 double distanta_totala = asteroid.distanta * 2.0;
                 double combustibil_consumat = (distanta_totala / 1000.0) * racheta.consum_combustibil;
                 double cost_combustibil = combustibil_consumat * racheta.pret_combustibil;
@@ -55,8 +61,8 @@ int main(int argc, char* argv[]) {
 
         Misiune::scrieMisiuni("raport_misiuni.csv", istoric_misiuni);
 
-        std::cout << "\n SIMULARE FINALIZATA\n";
-        std::cout << "Raportul a fost generat in fisierul 'raport_misiuni.csv'.\n\n";
+        std::cout << "\nSIMULARE FINALIZATA\n";
+        std::cout << "Raportul a fost generat in 'raport_misiuni.csv'\n\n";
 
         std::cout << "PROFIT BRUT PER RESURSA\n";
         for (const auto& p : profit_per_resursa) {
@@ -68,7 +74,7 @@ int main(int argc, char* argv[]) {
             return a.getScorEficienta() > b.getScorEficienta();
         });
 
-        std::cout << "\n CLASAMENT RACHETE (Scor Eficienta)\n";
+        std::cout << "\nCLASAMENT RACHETE (Scor Eficienta)\n";
         int loc = 1;
         for (const auto& r : lista_rachete) {
             std::cout << loc++ << ". " << r.id << " Profit Net Total: " << r.profit_net_total
@@ -77,7 +83,7 @@ int main(int argc, char* argv[]) {
         }
 
     } catch (const std::exception& e) {
-        std::cerr << "\nEroare critica: " << e.what() << "\n";
+        std::cerr << "Eroare la executie: " << e.what() << "\n";
         return 1;
     }
 
